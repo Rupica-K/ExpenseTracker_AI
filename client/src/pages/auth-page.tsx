@@ -39,9 +39,25 @@ export default function AuthPage() {
 
   function onSubmit(data: AuthFormValues) {
     if (activeTab === "login") {
-      loginMutation.mutate(data);
+      loginMutation.mutate(data, {
+        onSuccess: (userData) => {
+          console.log("Login successful, redirecting to home...", userData);
+          // Force a small delay before redirecting to ensure state is updated
+          setTimeout(() => {
+            navigate("/");
+          }, 100);
+        }
+      });
     } else {
-      registerMutation.mutate(data);
+      registerMutation.mutate(data, {
+        onSuccess: (userData) => {
+          console.log("Registration successful, redirecting to home...", userData);
+          // Force a small delay before redirecting to ensure state is updated
+          setTimeout(() => {
+            navigate("/");
+          }, 100);
+        }
+      });
     }
   }
 
