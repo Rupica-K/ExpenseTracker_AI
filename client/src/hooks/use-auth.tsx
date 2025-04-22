@@ -68,6 +68,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: "Registration successful",
         description: `Welcome to TrackWise, ${user.username}!`,
       });
+      // Navigate to home page after registration
+      navigate("/");
     },
     onError: (error: Error) => {
       toast({
