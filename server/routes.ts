@@ -4,6 +4,11 @@ import { storage } from "./storage";
 import { insertTransactionSchema, Insight } from "@shared/schema";
 import { setupAuth } from "./auth";
 import { z } from "zod";
+import { 
+  generateAllInsights, AIInsights, generateSpendingForecast,
+  generateBudgetSuggestions, generateSavingsGoal,
+  detectBillReminders, detectSpendingPatterns
+} from "./ai-insights";
 
 // Helper function to ensure user is authenticated
 function ensureAuthenticated(req: Request, res: Response, next: Function) {
