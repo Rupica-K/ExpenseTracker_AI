@@ -1,0 +1,63 @@
+Build a beautifully designed AI-enhanced expense tracker web app where users can register, log in, track their monthly income and expenses, visualize their spending trends, and receive personalized monthly spending tips from an AI assistant.
+
+Core Features:
+
+1. User Authentication:
+Sign up, login, and logout functionality
+Use JWT or session authentication
+Store users securely in a database
+2. Home Page (Dashboard):
+Top 1/3rd of the screen should include:
+
+A gradient card section that displays:
+Total Balance (centered)
+Income (bottom-left)
+Expenses (bottom-right)
+Directly below the balance card:
+
+A Monthly Summary AI Tips box, e.g.:
+"Your dining expenses increased by 30% compared to last month. Consider meal prepping!"
+This tip should be styled in a colorful, rounded card with a subtle animation or icon to make it feel intelligent and friendly.
+Below this section:
+
+A scrollable list of recent transactions
+Each with category icon, name, amount, and date
+Optional: filter by “Today,” “This Week,” or “This Month”
+A floating “+” button to add a new expense
+3. Add Expense Page:
+A clean form with:
+Amount input
+Category dropdown
+Optional note
+Date picker (defaults to today)
+Gradient “Add” button
+Redirects back to home after saving
+4. Analytics Page:
+Displays a pie chart of category-wise spending
+A list below the chart with total spend per category
+Users can switch between months using arrows or a dropdown
+5. AI-Powered Monthly Summary Tips (SpendBot):
+Logic:
+
+Compares current month vs previous month expenses by category
+Detects patterns like:
+Spending spikes
+New categories
+Spending over income
+Displays 1–3 natural language tips generated from logic like:
+"Your travel expenses increased by 40% this month. Planning early could save you money!"
+"New category detected: Subscriptions. Consider reviewing your plans."
+Backend Route:
+
+GET /api/insights/:userId?month=YYYY-MM
+Frontend Placement:
+
+Display directly below the balance card on the Home Page
+Tech Stack:
+
+Frontend: React.js or HTML/CSS/JS
+Backend: Node.js with Express
+Database: MongoDB or Firebase
+Authentication: JWT or Firebase Auth
+Charts: Chart.js or Recharts
+AI Tips Engine: Rule-based logic (optionally enhanced with GPT later)
