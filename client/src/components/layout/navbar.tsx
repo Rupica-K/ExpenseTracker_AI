@@ -91,33 +91,36 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex">
             <button 
-              className={`px-3 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 py-4 text-sm font-medium border-b-2 flex items-center ${
                 activeTab === "dashboard" 
                   ? "text-primary border-primary" 
                   : "text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300"
               }`}
               onClick={() => handleTabClick("dashboard")}
             >
+              <Home className="mr-2 h-4 w-4" />
               Dashboard
             </button>
             <button 
-              className={`px-3 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 py-4 text-sm font-medium border-b-2 flex items-center ${
                 activeTab === "analytics" 
                   ? "text-primary border-primary" 
                   : "text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300"
               }`}
               onClick={() => handleTabClick("analytics")}
             >
+              <BarChart className="mr-2 h-4 w-4" />
               Analytics
             </button>
             <button 
-              className={`px-3 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 py-4 text-sm font-medium border-b-2 flex items-center ${
                 activeTab === "ai-insights" 
                   ? "text-primary border-primary" 
                   : "text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300"
               }`}
               onClick={() => handleTabClick("ai-insights")}
             >
+              <Lightbulb className="mr-2 h-4 w-4" />
               AI Insights
             </button>
           </div>

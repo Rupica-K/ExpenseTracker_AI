@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import AppShell from "@/components/layout/app-shell";
 import BalanceCard from "@/components/balance-card";
 import AITipsCard from "@/components/ai-tips-card";
 import TransactionItem from "@/components/transaction-item";
 import ExpenseForm from "@/components/expense-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Loader2 } from "lucide-react";
+import { Plus, Loader2, Lightbulb, TrendingUp, Target, Bell, ChevronRight } from "lucide-react";
 import { Transaction, Insight } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
   const [isExpenseFormOpen, setIsExpenseFormOpen] = useState(false);
   const [timeFilter, setTimeFilter] = useState("all");
+  const [, navigate] = useLocation();
   
   // Fetch dashboard data
   const { data: dashboard, isLoading: isDashboardLoading } = useQuery({
@@ -75,6 +77,64 @@ export default function HomePage() {
         ) : (
           <AITipsCard insights={insights || []} isLoading={isInsightsLoading} />
         )}
+        
+        {/* AI Insights Card */}
+        <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-100">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-lg font-medium flex items-center">
+                  <Lightbulb className="mr-2 h-5 w-5 text-purple-500" />
+                  AI-Powered Financial Insights
+                </CardTitle>
+                <CardDescription>
+                  Get personalized recommendations tailored to your financial habits
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-white p-3 rounded-lg border border-purple-100 flex items-start space-x-2">
+                <div className="bg-blue-100 p-2 rounded-full">
+                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-sm">Spending Forecasts</h3>
+                  <p className="text-xs text-muted-foreground">Predict your next month's expenses</p>
+                </div>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-purple-100 flex items-start space-x-2">
+                <div className="bg-green-100 p-2 rounded-full">
+                  <Target className="h-5 w-5 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-sm">Smart Budget</h3>
+                  <p className="text-xs text-muted-foreground">Get personalized budget suggestions</p>
+                </div>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-purple-100 flex items-start space-x-2">
+                <div className="bg-amber-100 p-2 rounded-full">
+                  <Bell className="h-5 w-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-sm">Bill Reminders</h3>
+                  <p className="text-xs text-muted-foreground">Never miss a recurring payment</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="pt-0">
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/ai-insights')}
+              className="w-full border-purple-200 hover:bg-purple-100/50"
+            >
+              Explore AI Insights
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardFooter>
+        </Card>
         
         {/* Time Filters */}
         <Tabs defaultValue={timeFilter} onValueChange={setTimeFilter} className="w-full">
