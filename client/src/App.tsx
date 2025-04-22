@@ -6,6 +6,7 @@ import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import AnalyticsPage from "@/pages/analytics-page";
 import AIInsightsPage from "@/pages/ai-insights-page";
+import QRCodePage from "@/pages/qr-code-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { ThemeProvider } from "next-themes";
 
