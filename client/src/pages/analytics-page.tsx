@@ -20,6 +20,13 @@ export default function AnalyticsPage() {
   
   const { data: transactions, isLoading } = useQuery<Transaction[]>({
     queryKey: ["/api/transactions/month", selectedMonth.year, selectedMonth.month],
+    queryFn: async () => {
+      const res = await fetch(`/api/transactions/month/${selectedMonth.year}/${selectedMonth.month}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch monthly transactions');
+      }
+      return res.json();
+    }
   });
   
   const chartColors = [

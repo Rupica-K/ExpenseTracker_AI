@@ -73,7 +73,17 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
       // Invalidate all transaction-related queries to update all views
       queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
       queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/transactions/month"] });
+      
+      // Get current month and year for analytics invalidation
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth();
+      
+      // Invalidate the specific monthly transactions query for analytics page
+      queryClient.invalidateQueries({ 
+        queryKey: ["/api/transactions/month", currentYear, currentMonth]
+      });
+      
       queryClient.invalidateQueries({ queryKey: ["/api/insights"] });
       
       toast({
