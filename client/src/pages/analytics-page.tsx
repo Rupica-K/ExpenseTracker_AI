@@ -51,11 +51,23 @@ export default function AnalyticsPage() {
       });
     
     return Array.from(categoryMap.entries())
-      .map(([category, amount]) => ({
-        name: getCategoryById(category).name,
-        value: amount,
-        id: category
-      }))
+      .map(([category, amount]) => {
+        try {
+          const categoryInfo = getCategoryById(category);
+          return {
+            name: categoryInfo.name,
+            value: amount,
+            id: category
+          };
+        } catch (e) {
+          console.error(`Invalid category: ${category}`);
+          return {
+            name: "Other",
+            value: amount,
+            id: "other"
+          };
+        }
+      })
       .sort((a, b) => b.value - a.value);
   };
   

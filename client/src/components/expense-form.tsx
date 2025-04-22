@@ -70,8 +70,11 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
       return await res.json();
     },
     onSuccess: () => {
+      // Invalidate all transaction-related queries to update all views
       queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
       queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/transactions/month"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/insights"] });
       
       toast({
         title: isIncome ? "Income added" : "Expense added",
@@ -115,6 +118,11 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
   });
   
   function onSubmit(data: ExpenseFormValues) {
+    // For income, set a default category value if none is provided
+    if (isIncome) {
+      // Use "income" as the category for all income transactions
+      data.category = "income";
+    }
     createTransaction.mutate(data);
   }
   
@@ -183,33 +191,36 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
               )}
             />
             
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          <div className="flex items-center">
-                            <category.icon className={`mr-2 h-4 w-4 ${category.color}`} />
-                            <span>{category.name}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Only show category field for expenses, not for income */}
+            {!isIncome && (
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            <div className="flex items-center">
+                              <category.icon className={`mr-2 h-4 w-4 ${category.color}`} />
+                              <span>{category.name}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             
             <FormField
               control={form.control}

@@ -11,6 +11,7 @@ import {
   CreditCard,
   Gift,
   Ticket,
+  DollarSign,
   LucideIcon
 } from "lucide-react";
 
@@ -23,6 +24,13 @@ export interface CategoryInfo {
 }
 
 export const categories: CategoryInfo[] = [
+  {
+    id: "income",
+    name: "Income",
+    icon: DollarSign,
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-100"
+  },
   {
     id: "shopping",
     name: "Shopping",
