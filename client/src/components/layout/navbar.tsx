@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
-import { LogOut, Bell } from "lucide-react";
+import { LogOut, Bell, Lightbulb, BarChart, Home } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +28,8 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
       navigate("/");
     } else if (tab === "analytics") {
       navigate("/analytics");
+    } else if (tab === "ai-insights") {
+      navigate("/ai-insights");
     }
   };
   
@@ -107,6 +109,16 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
               onClick={() => handleTabClick("analytics")}
             >
               Analytics
+            </button>
+            <button 
+              className={`px-3 py-4 text-sm font-medium border-b-2 ${
+                activeTab === "ai-insights" 
+                  ? "text-primary border-primary" 
+                  : "text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300"
+              }`}
+              onClick={() => handleTabClick("ai-insights")}
+            >
+              AI Insights
             </button>
           </div>
         </div>

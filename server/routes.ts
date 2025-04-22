@@ -168,7 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI Insights route
+  // Basic Insights route
   app.get("/api/insights", ensureAuthenticated, async (req, res) => {
     const userId = req.user!.id;
     
@@ -188,6 +188,131 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(insights);
     } catch (error) {
       res.status(500).json({ message: "Failed to generate insights" });
+    }
+  });
+  
+  // Advanced AI Insights route
+  app.get("/api/ai-insights", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      // Get all user transactions for AI analysis
+      const transactions = await storage.getTransactions(userId);
+      
+      if (transactions.length < 5) {
+        return res.json({
+          message: "Add more transactions to receive AI-powered financial insights"
+        });
+      }
+      
+      // Generate AI insights using OpenAI
+      const insights = await generateAllInsights(userId, transactions);
+      res.json(insights);
+    } catch (error) {
+      console.error("Error generating AI insights:", error);
+      res.status(500).json({ 
+        message: "Failed to generate AI insights",
+        error: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+  
+  // Specific AI insight endpoints
+  app.get("/api/ai-insights/spending-forecast", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      const transactions = await storage.getTransactions(userId);
+      const forecast = await generateSpendingForecast(userId, transactions);
+      
+      if (!forecast) {
+        return res.json({
+          message: "Not enough transaction data to generate a spending forecast"
+        });
+      }
+      
+      res.json(forecast);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate spending forecast" });
+    }
+  });
+  
+  app.get("/api/ai-insights/budget-suggestions", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      const transactions = await storage.getTransactions(userId);
+      const suggestions = await generateBudgetSuggestions(userId, transactions);
+      
+      if (!suggestions) {
+        return res.json({
+          message: "Not enough transaction data to generate budget suggestions"
+        });
+      }
+      
+      res.json(suggestions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate budget suggestions" });
+    }
+  });
+  
+  app.get("/api/ai-insights/savings-goals", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      const targetAmount = req.query.targetAmount ? 
+        parseInt(req.query.targetAmount as string) : undefined;
+        
+      const transactions = await storage.getTransactions(userId);
+      const savingsGoal = await generateSavingsGoal(userId, transactions, targetAmount);
+      
+      if (!savingsGoal) {
+        return res.json({
+          message: "Not enough transaction data to generate a savings goal"
+        });
+      }
+      
+      res.json(savingsGoal);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate savings goal" });
+    }
+  });
+  
+  app.get("/api/ai-insights/bill-reminders", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      const transactions = await storage.getTransactions(userId);
+      const reminders = await detectBillReminders(userId, transactions);
+      
+      if (!reminders) {
+        return res.json({
+          message: "Not enough transaction data to detect recurring bills"
+        });
+      }
+      
+      res.json(reminders);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate bill reminders" });
+    }
+  });
+  
+  app.get("/api/ai-insights/spending-patterns", ensureAuthenticated, async (req, res) => {
+    const userId = req.user!.id;
+    
+    try {
+      const transactions = await storage.getTransactions(userId);
+      const patterns = await detectSpendingPatterns(userId, transactions);
+      
+      if (!patterns) {
+        return res.json({
+          message: "Not enough transaction data to detect spending patterns"
+        });
+      }
+      
+      res.json(patterns);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to detect spending patterns" });
     }
   });
 
