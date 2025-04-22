@@ -23,12 +23,22 @@ export const insertUserSchema = createInsertSchema(users).pick({
   password: true,
 });
 
-export const insertTransactionSchema = createInsertSchema(transactions).pick({
+// Create base schema from Drizzle
+const baseTransactionSchema = createInsertSchema(transactions).pick({
   amount: true,
   category: true,
   description: true,
-  date: true,
   isIncome: true,
+});
+
+// Create a custom schema that handles the date field properly
+export const insertTransactionSchema = baseTransactionSchema.extend({
+  date: z.string().or(z.date()).transform((val) => {
+    if (typeof val === 'string') {
+      return new Date(val);
+    }
+    return val;
+  }),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

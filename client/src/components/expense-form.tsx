@@ -55,8 +55,17 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
     mutationFn: async (data: ExpenseFormValues) => {
       // Convert amount to cents for storage
       const amountInCents = Math.round(data.amount * 100);
-      const payload = { ...data, amount: amountInCents };
       
+      // Format the date as an ISO string for the API
+      const formattedDate = data.date.toISOString();
+      
+      const payload = { 
+        ...data, 
+        amount: amountInCents,
+        date: formattedDate 
+      };
+      
+      console.log("Submitting transaction:", payload);
       const res = await apiRequest("POST", "/api/transactions", payload);
       return await res.json();
     },
@@ -73,10 +82,33 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
       form.reset();
       onOpenChange(false);
     },
-    onError: (error) => {
+    onError: (error: any) => {
+      console.error("Transaction error:", error);
+      
+      let errorMessage = "An unexpected error occurred";
+      
+      // Try to parse the error message if it's from our API
+      if (error.message) {
+        try {
+          // If the error message is JSON, parse it
+          if (typeof error.message === 'string' && error.message.includes('{')) {
+            const parsed = JSON.parse(error.message);
+            if (parsed.message) {
+              errorMessage = Array.isArray(parsed.message) 
+                ? parsed.message.map((e: any) => `${e.path}: ${e.message}`).join(', ')
+                : parsed.message;
+            }
+          } else {
+            errorMessage = error.message;
+          }
+        } catch (e) {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
         title: "Failed to add transaction",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     },
