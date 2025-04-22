@@ -52,7 +52,7 @@ export default function AuthPage() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-2xl text-center font-bold text-primary">
-              ExpenseAI
+              TrackWise
             </CardTitle>
             <CardDescription className="text-center">
               {activeTab === "login" 
@@ -165,7 +165,7 @@ export default function AuthPage() {
         <div className="max-w-md text-center">
           <h1 className="text-3xl font-bold mb-6">Smart Expense Tracking</h1>
           <p className="text-lg mb-8">
-            Take control of your finances with ExpenseAI - the smart expense tracker that helps you save money with personalized insights.
+            Take control of your finances with TrackWise - the smart expense tracker that helps you save money with personalized insights.
           </p>
           <div className="grid grid-cols-2 gap-6 text-left">
             <div className="flex items-start">

@@ -42,7 +42,7 @@ export default function AITipsCard({ insights, isLoading }: AITipsCardProps) {
         </div>
         <div>
           <div className="flex items-center">
-            <h3 className="text-sm font-semibold text-gray-900">SpendBot Insights</h3>
+            <h3 className="text-sm font-semibold text-gray-900">TrackWise Insights</h3>
             <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-pink-500/10 text-pink-500">AI</span>
           </div>
           <p className="mt-1 text-sm text-gray-600">

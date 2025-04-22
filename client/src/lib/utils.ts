@@ -6,13 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(amount: number): string {
-  // Convert cents to dollars if needed (our app stores amounts in cents)
-  const dollars = amount / 100;
+  // Convert cents to rupees if needed (our app stores amounts in cents)
+  const rupees = amount / 100;
   
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }).format(dollars);
+  }).format(rupees);
 }
