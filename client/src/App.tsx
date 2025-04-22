@@ -6,7 +6,6 @@ import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import AnalyticsPage from "@/pages/analytics-page";
 import AIInsightsPage from "@/pages/ai-insights-page";
-import QRCodePage from "@/pages/qr-code-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { ThemeProvider } from "next-themes";
 
@@ -16,7 +15,6 @@ function Router() {
       <ProtectedRoute path="/" component={HomePage} />
       <ProtectedRoute path="/analytics" component={AnalyticsPage} />
       <ProtectedRoute path="/ai-insights" component={AIInsightsPage} />
-      <ProtectedRoute path="/qr-code" component={QRCodePage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>

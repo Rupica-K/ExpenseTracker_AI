@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
-import { LogOut, Bell, Lightbulb, BarChart, Home, QrCode } from "lucide-react";
+import { LogOut, Bell, Lightbulb, BarChart, Home } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,8 +30,6 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
       navigate("/analytics");
     } else if (tab === "ai-insights") {
       navigate("/ai-insights");
-    } else if (tab === "qr-code") {
-      navigate("/qr-code");
     }
   };
   
@@ -124,17 +122,6 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
             >
               <Lightbulb className="mr-2 h-4 w-4" />
               AI Insights
-            </button>
-            <button 
-              className={`px-3 py-4 text-sm font-medium border-b-2 flex items-center ${
-                activeTab === "qr-code" 
-                  ? "text-primary border-primary" 
-                  : "text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300"
-              }`}
-              onClick={() => handleTabClick("qr-code")}
-            >
-              <QrCode className="mr-2 h-4 w-4" />
-              QR Code
             </button>
           </div>
         </div>
