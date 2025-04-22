@@ -21,12 +21,21 @@ import { Switch } from "@/components/ui/switch";
 
 const expenseFormSchema = z.object({
   amount: z.coerce.number().positive("Amount must be positive"),
-  category: z.string().min(1, "Please select a category"),
+  category: z.string().optional(),
   description: z.string().optional(),
   date: z.date({
     required_error: "Please select a date",
   }),
   isIncome: z.boolean().default(false),
+}).refine((data) => {
+  // Category is required only for expenses, not for income
+  if (data.isIncome) {
+    return true;
+  }
+  return !!data.category;
+}, {
+  message: "Please select a category for expenses",
+  path: ["category"]
 });
 
 type ExpenseFormValues = z.infer<typeof expenseFormSchema>;
@@ -128,17 +137,35 @@ export default function ExpenseForm({ open, onOpenChange }: ExpenseFormProps) {
   });
   
   function onSubmit(data: ExpenseFormValues) {
+    console.log("Form data before submission:", data);
+    console.log("Is income?", isIncome);
+    
+    // Clone the data object to avoid mutation issues
+    const submissionData = {...data};
+    
     // For income, set a default category value if none is provided
     if (isIncome) {
       // Use "income" as the category for all income transactions
-      data.category = "income";
+      submissionData.category = "income";
+      console.log("Setting category to income");
     }
-    createTransaction.mutate(data);
+    
+    console.log("Final submission data:", submissionData);
+    createTransaction.mutate(submissionData);
   }
   
   const handleIncomeToggle = (checked: boolean) => {
     setIsIncome(checked);
     form.setValue("isIncome", checked);
+    
+    // Clear any category validation errors when toggling to income
+    if (checked) {
+      form.clearErrors("category");
+      
+      // We can clear the category field when switching to income
+      // but we preserve it when switching back to expense
+      form.setValue("category", "");
+    }
   };
 
   return (
