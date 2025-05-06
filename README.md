@@ -1,7 +1,7 @@
-ExpenseAITracker  
+##ExpenseAITracker  
 A simple and elegant web application that helps users track income and expenses while providing basic AI-powered financial insights.
 
-Features  
+##Features  
 - Add income and expense transactions  
 - View total balance, income, and spending  
 - Categorize expenses (e.g., Food, Travel, Bills)  
@@ -9,11 +9,11 @@ Features
 - Persistent storage using browser's localStorage  
 - Modern and responsive UI for all devices  
 
-Prerequisites  
+##Prerequisites  
 - A modern web browser (Chrome, Firefox, Safari, Edge)  
 - No installation or server setup required  
 
-Usage  
+##Usage  
 1. Launch `index.html` in your browser  
 2. Add income and expense entries using the input form  
 3. View real-time updates of your balance and category-wise totals  
@@ -22,7 +22,7 @@ Usage
 Supported File Formats  
 - No file uploads needed (client-side app only)  
 
-Technical Details  
+##Technical Details  
 The application uses:
 
 - HTML, CSS, JavaScript for the frontend  
@@ -30,5 +30,4 @@ The application uses:
 - Rule-based logic in JavaScript for AI tips (SpendBot)  
 - Responsive design using CSS Flexbox and Media Queries  
 
-License  
-This project is open source and available under the MIT License.
+
