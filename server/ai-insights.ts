@@ -2,9 +2,7 @@ import OpenAI from "openai";
 import { Transaction } from "@shared/schema";
 
 // Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'dummy-key' });
 
 // Types for AI insights
 export interface SpendingForecast {
