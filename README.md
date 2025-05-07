@@ -1,4 +1,4 @@
-EXPENSETRACKERAI 
+EXPENSETRACKER_AI 
 A simple and elegant web application that helps users track income and expenses while providing basic AI-powered financial insights.
 
 FEATURES
